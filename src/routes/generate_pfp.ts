@@ -2,6 +2,7 @@ import axios from "axios";
 import { Router } from "express";
 import { VeniceClient } from "../clients/VeniceClient.js";
 import { ReplicateClient } from "../clients/ReplicateClient.js";
+import { PinataClient } from "../clients/PinataClient.js";
 import { Messages } from "../clients/VeniceClient.js";
 import { peeplesBadgeResponseFormat } from "../utils.js";
 import authenticate from "../middleware/middleware.js";
@@ -428,7 +429,7 @@ CRITICAL:
   ];
 }
 
-router.get("/generate_pfp/:fid", authenticate, async (req, res) => {
+router.get("/:fid", authenticate, async (req, res) => {
   try {
     const { fid } = req.params;
 
@@ -438,6 +439,7 @@ router.get("/generate_pfp/:fid", authenticate, async (req, res) => {
 
     const veniceClient = new VeniceClient();
     const replicateClient = new ReplicateClient();
+    const pinataClient = PinataClient.getInstance();
 
     // Fetch user data from Neynar
     const {
@@ -486,10 +488,14 @@ router.get("/generate_pfp/:fid", authenticate, async (req, res) => {
 
     console.log("Generated PFP Image URL:", pfpImageUrl);
 
+    //upload to pinata and get the cid;
+    const uploadResponse = await pinataClient.uploadImage(pfpImageUrl);
+
     res.status(200).json({
       imageUrl: pfpImageUrl,
       characterDescription: characterDescription,
       badgeConfig: badgeConfigJson,
+      pinataCid: uploadResponse.cid,
     });
   } catch (error) {
     console.error("Error generating PFP:", error);
