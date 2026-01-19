@@ -122,12 +122,12 @@ router.post("/", authenticate, async (req, res) => {
 
     // Upload the new image to IPFS
     console.log("Uploading composited image to IPFS");
-    const uploadResponse = await pinataClient.uploadBuffer(
-      compositedImageBuffer,
-      `badge-${pinTokenId}-${Date.now()}.png`
-    );
+    //const uploadResponse = await pinataClient.uploadBuffer(
+    //  compositedImageBuffer,
+    //  `badge-${pinTokenId}-${Date.now()}.png`
+    //);
 
-    console.log(`New badge uploaded to IPFS: ${uploadResponse.cid}`);
+    //console.log(`New badge uploaded to IPFS: ${uploadResponse.cid}`);
 
     // TODO: Update blockchain/smart contract with new state
     // This should update:
@@ -142,8 +142,8 @@ router.post("/", authenticate, async (req, res) => {
 
     res.status(200).json({
       success: true,
-      newImageCid: uploadResponse.cid,
-      imageUrl: `${PINATA_GATEWAY}/ipfs/${uploadResponse.cid}`,
+      //newImageCid: uploadResponse.cid,
+      //imageUrl: `${PINATA_GATEWAY}/ipfs/${uploadResponse.cid}`,
       message: `Flair unequipped from slot ${slotIndex}`,
       remainingFlairCount: remainingFlair.length,
     });

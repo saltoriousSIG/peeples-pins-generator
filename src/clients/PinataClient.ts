@@ -34,14 +34,14 @@ export class PinataClient {
     }
   }
 
-  public async uploadBuffer(buffer: Buffer, filename: string): Promise<UploadResponse> {
-    try {
-      // Create a File-like object from the buffer for Node.js
-      const file = new File([buffer], filename, { type: "image/png" }) as any;
-      const upload = await (this.pinata.upload as any).file(file);
-      return upload;
-    } catch(error) {
-      throw new Error(`Failed to upload buffer: ${error}`);
-    }
-  }
+  //public async uploadBuffer(buffer: Buffer, filename: string): Promise<UploadResponse> {
+  //  try {
+  //    // Create a File-like object from the buffer for Node.js
+  //    const file = new File([buffer], filename, { type: "image/png" }) as any;
+  //    const upload = await (this.pinata.upload as any).file(file);
+  //    return upload;
+  //  } catch(error) {
+  //    throw new Error(`Failed to upload buffer: ${error}`);
+  //  }
+  //}
 }
