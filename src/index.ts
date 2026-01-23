@@ -2,8 +2,7 @@ import express from "express";
 import cors from "cors";
 import { AUTH_TOKEN, PORT } from "./utils.js";
 import generatePfp from "./routes/generate_pfp.js";
-import equipFlair from "./routes/equip_flair.js";
-import unequipFlair from "./routes/unequip_flair.js";
+import modifyPfp from "./routes/modify_pfp.js";
 import dotenv from "dotenv";
 
 dotenv.config();
@@ -28,8 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 //
 
 app.use("/generate_pfp", generatePfp);
-app.use("/equip_flair", equipFlair);
-app.use("/unequip_flair", unequipFlair);
+app.use("/modify_pfp", modifyPfp);
 
 //
 //

@@ -25,9 +25,13 @@ export class PinataClient {
     return this.pinata;
   }
 
-  public async uploadImage(url: string): Promise<UploadResponse> {
+  public async uploadImage(url: string, username: string): Promise<UploadResponse> {
     try {
-      const upload = await this.pinata.upload.public.url(url);
+      const upload = await this.pinata.upload.public.url(url, {
+        metadata: {
+          name: username
+        }
+      });
       return upload;
     } catch(error) {
       throw new Error(`Failed to upload image: ${error}`);
