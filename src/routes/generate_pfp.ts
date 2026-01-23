@@ -97,12 +97,8 @@ You will receive a Peeples Donuts character description from the previous step. 
 === CRITICAL REQUIREMENTS ===
 The badge MUST meet these non-negotiable requirements:
 
-1. **EXACT DIMENSIONS**: Output image MUST be exactly 1024x1024 pixels
-2. **FLAIR SLOT POSITIONS**: The three flair slots MUST be at these EXACT pixel coordinates (center of each slot):
-   - Slot 1: x=291, y=830
-   - Slot 2: x=482, y=830
-   - Slot 3: x=662, y=830
-   These positions are NON-NEGOTIABLE and must be identical on every generated badge
+1. **SHAPE & DIMENSIONS**: Generated badge must match the reference template - wide horizontal rounded rectangle, NOT tall, NOT square
+2. **ASPECT RATIO**: Final output must be 1:1 aspect ratio
 3. **HEADER TEXT**: "Peeples Donuts" must always appear at top in retro script style matching reference template
 4. **PHOTOREALISTIC MATERIALS**: Badge material and lanyard must look photorealistic with proper shadows, reflections, and shading - NEVER illustrated or flat
 5. **LANYARD REALISM**: Lanyard/chain must always look realistic with proper lighting and material properties - NEVER drawn or cartoon style
@@ -293,7 +289,7 @@ Build the nanoBananaPrompt emphasizing:
 7. FIXED FLAIR SLOT POSITIONS (same coordinates for all badges)
 
 Template structure:
-"Photorealistic employee badge matching the reference template EXACTLY. OUTPUT MUST BE EXACTLY 1024x1024 PIXELS. CRITICAL: Badge is photographed straight-on, perfectly centered, directly facing camera with no perspective angle, completely flat and parallel to camera. Wide horizontal rounded rectangle badge with [EDGE_STYLE] edge. [DONUT_STYLE] donut with [GLAZE] glaze and [TOPPINGS], cute cartoon face, sits in top notch. 'Peeples Donuts' in retro script font, [FONT_COLOR], centered below donut. Photorealistic [BADGE_MATERIAL] badge with realistic [BASE_COLOR] base color, proper lighting, shadows and reflections. Cream nameplate rectangle in lower portion. Small circular PFP on LEFT showing [PEEPLES_CHARACTER_DESCRIPTION] in friendly Peeples Donuts cartoon style - soft rounded features, warm colors, expressive face. Username '[USERNAME]' in [NAMEPLATE_FONT] font, [NAMEPLATE_FONT_COLOR], to right of PFP. CRITICAL FLAIR POSITIONS: Three recessed circular flair slots (75px diameter each) at bottom edge at EXACT FIXED pixel coordinates - slot 1 centered at x=291 y=830, slot 2 centered at x=482 y=830, slot 3 centered at x=662 y=830. These positions must be IDENTICAL on every badge. Photorealistic [LANYARD_COLOR] [LANYARD_MATERIAL] lanyard at top with realistic materials and lighting. Clean solid [BACKGROUND_COLOR] background. IMPORTANT: Badge is centered and flat, shot from directly above with no angle or tilt, perfectly parallel to camera, 1024x1024 output, flair slots at exact fixed pixel coordinates. Product photography with professional lighting - badge and lanyard look photorealistic with proper materials, PFP character is friendly Peeples cartoon style."
+"Photorealistic employee badge matching the reference template EXACTLY. CRITICAL: Badge is photographed straight-on, perfectly centered, directly facing camera with no perspective angle, completely flat and parallel to camera. Wide horizontal rounded rectangle badge (1:1 aspect ratio) with [EDGE_STYLE] edge. [DONUT_STYLE] donut with [GLAZE] glaze and [TOPPINGS], cute cartoon face, sits in top notch. 'Peeples Donuts' in retro script font, [FONT_COLOR], centered below donut. Photorealistic [BADGE_MATERIAL] badge with realistic [BASE_COLOR] base color, proper lighting, shadows and reflections. Cream nameplate rectangle in lower portion. Small circular PFP on LEFT showing [PEEPLES_CHARACTER_DESCRIPTION] in friendly Peeples Donuts cartoon style - soft rounded features, warm colors, expressive face. Username '[USERNAME]' in [NAMEPLATE_FONT] font, [NAMEPLATE_FONT_COLOR], to right of PFP. CRITICAL: Three recessed circular flair slots at bottom edge in FIXED POSITIONS - evenly spaced horizontally at exact same pixel coordinates as reference template, slots must be in identical position for all badges. Photorealistic [LANYARD_COLOR] [LANYARD_MATERIAL] lanyard at top with realistic materials and lighting. Clean solid [BACKGROUND_COLOR] background. IMPORTANT: Badge is centered and flat, shot from directly above with no angle or tilt, perfectly parallel to camera, flair slots at fixed coordinates matching reference. Product photography with professional lighting - badge and lanyard look photorealistic with proper materials, PFP character is friendly Peeples cartoon style."
 
 === STRICT RULES ===
 - header.text = "Peeples Donuts"
