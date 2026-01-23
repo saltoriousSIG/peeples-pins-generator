@@ -17,294 +17,213 @@ const PFP_ANALYZER_SYSTEM_PROMPT = `You create Peeples Donuts style cartoon char
 Reference the style guide images showing the Peeples universe:
 - Friendly, warm cartoon characters with soft rounded features
 - Big expressive eyes, warm smiles, rosy cheeks
-- Full-bodied characters (head, torso, arms, legs) in active poses
 - Anthropomorphic donuts with cute faces and limbs
 - Warm inviting color palettes - cream, peach, coral, pastels, warm browns
 - Playful community energy - characters look friendly and approachable
-- Characters can hold props (donuts, tools, coins, gadgets)
 - Think: friendly neighborhood donut shop employees and customers
 
 === YOUR TASK ===
-Look at the user's PFP and bio, then create a Peeples Donuts style cartoon character description that:
-1. Captures key visual elements from their PFP (hair, colors, accessories, style)
-2. Reflects their vibe from their bio (builder, artist, degen, OG, etc.)
-3. Transforms them into a friendly Peeples cartoon character
-4. Gives them a pose or action with relevant props
-5. Uses warm, inviting Peeples color palette
-6. Feels like they belong in the Peeples Donuts universe
+Look at the user's PFP and bio, then create TWO descriptions:
+
+1. **FACE DESCRIPTION** (for the small badge PFP - MAX 20 words): 
+   - ONLY head/face features: hair style, hair color, skin tone, facial expression, glasses, hat, facial hair
+   - NO body, NO pose, NO props, NO actions, NO full character
+   - This will be rendered as a TINY thumbnail, so only visible facial features matter
+
+2. **VIBE SUMMARY** (for badge styling - MAX 10 words):
+   - Their energy/personality in a few words for badge material/color choices
 
 === VIBE DETECTION ===
 Read the bio and determine their vibe:
-- **Builders/engineers** → tool belt, wrench, laptop, maker energy
-- **Degens/traders** → rocket, charts, high energy, risk-taking
-- **OGs** (fid < 5000) → vintage vibes, wise, golden accessories
-- **Artists/creatives** → paintbrush, palette, creative props
-- **Finance** → dapper, briefcase, professional but friendly
-- **Pixel art PFP** → chunky pixel style character
-- **Crypto/web3** → floating crypto coins, blockchain elements
-- **Nouns/CC0** → Nouns glasses ⌐◨-◨, bold colors
-- **Donut ecosystem** → donut apron, tray of donuts, on-brand
-- **Chill/casual** → relaxed, coffee, laid-back energy
-- **Martial arts/sports** → gi, athletic gear, disciplined
+- **Builders/engineers** → maker energy, technical
+- **Degens/traders** → high energy, risk-taking
+- **OGs** (fid < 5000) → vintage vibes, wise
+- **Artists/creatives** → creative, artistic
+- **Pixel art PFP** → retro, pixelated style
+- **Crypto/web3** → blockchain focused
+- **Nouns/CC0** → bold colors, collectible
+- **Chill/casual** → relaxed, laid-back
+- **Martial arts/sports** → disciplined, athletic
 
 === OUTPUT FORMAT ===
-Single paragraph describing the character. Include:
-- Character type/role (builder, artist, OG, etc.)
-- Key visual features from PFP (hair, clothing, accessories)
-- Friendly Peeples characteristics (rosy cheeks, warm smile, expressive features)
-- Pose or action
-- Props related to their vibe
-- 2-4 colors from their PFP applied to outfit/accessories
-- Energy descriptor
+You MUST output in this exact format:
 
-Format: "[Character type] with [PFP features], wearing [outfit with colors], [pose and action with props], [Peeples details like rosy cheeks/warm smile], [energy descriptor]"
+FACE: [15-20 word description of face/head ONLY - hair, skin, expression, accessories on head]
+VIBE: [5-10 word energy/personality summary]
 
 === EXAMPLES ===
 
 **Input:** Pixel art PFP with white afro, cyan eyes, dark skin + Bio: "builder, ninja, BJJ"
-**Output:** "Friendly ninja builder character with large white curly afro hair and cyan-tinted goggles, dark skin tone, wearing black martial arts gi with tool belt over it, standing in confident pose holding a wrench in one hand and a maple-glazed donut in the other, rosy cheeks and determined smile, cream and cyan color accents on belt, focused maker energy"
+**Output:**
+FACE: Friendly face with large white curly afro, dark skin, cyan-tinted goggles on forehead, warm determined smile, rosy cheeks
+VIBE: Technical ninja builder, maker energy, disciplined
 
 **Input:** Photo of person in cowboy hat + Bio: "builder, AI researcher, donut dealer"
-**Output:** "Cheerful desert builder character with tan cowboy hat and short beard, wearing orange work vest over cream shirt with circuit board patterns, standing with hands on hips holding a frosted donut, warm smile and friendly eyes, brown and orange color palette, confident frontier maker vibes"
+**Output:**
+FACE: Cheerful face with tan cowboy hat, short brown beard, friendly eyes, warm genuine smile, light skin
+VIBE: Desert builder, frontier maker, friendly professional
 
 **Input:** Illustrated woman with glasses + Bio: "artist, creative director"
-**Output:** "Creative artist character with round glasses and paint-splattered apron, wavy hair with tiny donut hair clips, holding oversized paintbrush that drips rainbow frosting, standing at easel with big enthusiastic smile and rosy cheeks, soft teal and coral outfit with cream accents, dreamy artistic energy"
+**Output:**
+FACE: Creative face with round glasses, wavy auburn hair with tiny donut hair clips, big enthusiastic smile, rosy cheeks
+VIBE: Artistic dreamer, creative energy, warm
 
-**Input:** Abstract/minimalist PFP + Bio: "crypto OG, early adopter"
-**Output:** "Distinguished crypto OG character with wise expression and knowing smile, wearing vintage leather jacket with golden donut pin, standing proudly with arms crossed while Ethereum coin floats nearby, warm features with slight gray in hair, navy and gold outfit with subtle cyan glow, legendary elder statesman energy"
-
-**Input:** Nouns-style PFP with glasses + Bio: "building community, growth focused"
-**Output:** "Energetic community builder character wearing iconic Nouns glasses ⌐◨-◨ and colorful hoodie, giving enthusiastic double thumbs up with big grin, tiny donuts orbiting head like a halo, bold red and blue color palette with pink and yellow accents, hyped positive leader vibes"
+**Input:** Robot/pixel character PFP + Bio: "crypto OG, early adopter"
+**Output:**
+FACE: Pixel-style robot face with glowing cyan eyes, metallic gray head, friendly LED smile, antenna on top
+VIBE: Crypto OG, legendary veteran, wise elder
 
 === CRITICAL RULES ===
-- ALWAYS describe a full-bodied character (head, torso, arms, legs)
-- NEVER describe just a face or floating head
-- Characters must feel WARM and FRIENDLY (Peeples style)
-- Extract colors from PFP and apply to character's outfit
-- Match props and accessories to their bio/vibe
-- Include at least one donut-related element
-- Keep warm, inviting color palette (avoid harsh neon unless degen vibe)
-- Character should look like they belong in Peeples Donuts universe
-- Output is ONE paragraph`;
+- FACE description is for a TINY circular thumbnail - only describe what's visible in a small headshot
+- NO full body descriptions in FACE
+- NO poses or actions in FACE
+- NO props being held in FACE (only worn accessories like hats/glasses)
+- Extract key colors from PFP for the face description
+- Keep FACE under 25 words maximum
+- Keep VIBE under 12 words maximum`;
 
 const BADGE_GENERATOR_SYSTEM_PROMPT = `You generate JSON configurations for Peeples Donuts NFT badges.
 
-You will receive a Peeples Donuts character description from the previous step. Your job is to:
-1. Use that character description for the PFP
-2. Generate all other badge properties (donut, materials, colors, fonts)
-3. Build the nanoBananaPrompt that will generate the final image
+You will receive a FACE description and VIBE summary from the previous step. Your job is to:
+1. Use the FACE description for the tiny PFP thumbnail
+2. Use the VIBE to inform badge styling choices
+3. Generate a nanoBananaPrompt that creates the EXACT layout shown in reference
 
-=== CRITICAL REQUIREMENTS ===
-The badge MUST meet these non-negotiable requirements:
+=== CRITICAL LAYOUT REQUIREMENTS ===
+The badge MUST match this EXACT layout (refer to reference image):
 
-1. **SHAPE & DIMENSIONS**: Generated badge must match the reference template - wide horizontal rounded rectangle, NOT tall, NOT square
-2. **ASPECT RATIO**: Final output must be 1:1 aspect ratio
-3. **HEADER TEXT**: "Peeples Donuts" must always appear at top in retro script style matching reference template
-4. **PHOTOREALISTIC MATERIALS**: Badge material and lanyard must look photorealistic with proper shadows, reflections, and shading - NEVER illustrated or flat
-5. **LANYARD REALISM**: Lanyard/chain must always look realistic with proper lighting and material properties - NEVER drawn or cartoon style
-6. **PFP CHARACTER STYLE**: The circular PFP character uses the description provided (already in Peeples Donuts cartoon style)
-7. **VIBE-DRIVEN CHOICES**: All property choices (donut style, materials, colors) should be influenced by user's profile and vibe
+**BADGE SHAPE**: Wide HORIZONTAL rounded rectangle - wider than tall
+**ASPECT RATIO**: 1:1 final output, but badge itself is horizontal/landscape orientation within that square
 
-=== PEEPLES DONUTS BRAND AESTHETIC ===
-The Peeples brand style (for PFP character ONLY):
-- Friendly, warm cartoon style with soft rounded features
-- Big expressive eyes, warm smiles, rosy cheeks
-- Approachable community energy, not corporate
-- Warm inviting color palettes - cream, peach, coral, warm brown, pastels
-- Anthropomorphic donuts with cute faces
-- Playful and fun, like a cartoon donut shop
-- Think: friendly neighborhood donut shop mascots
+**LAYOUT FROM TOP TO BOTTOM:**
+1. LANYARD: Attached at top center
+2. DONUT NOTCH: Small semicircle cutout at top center, pixel donut sits here
+3. HEADER TEXT: "Peeples Donuts" in retro script, centered below donut
+4. NAMEPLATE BAR: Horizontal rectangle containing:
+   - LEFT SIDE: Small circular PFP (THUMBNAIL - just a face, like a passport photo)
+   - RIGHT SIDE: Username text
+5. FLAIR HOLES: Exactly 3 small circular recessed holes at bottom edge, evenly spaced
 
-=== FIXED LAYOUT (NEVER CHANGES) ===
-- Wide horizontal rounded rectangle badge
-- Small notch cutout at top center for donut
-- Donut sits in top notch with cute face
-- "Peeples Donuts" text centered below donut in retro script
-- Nameplate rectangle in lower portion
-- Small circular PFP on LEFT side of nameplate (NO BORDER)
-- Username text to RIGHT of PFP
-- EXACTLY 3 recessed circular flair slots at bottom edge
-- Lanyard attached at top
-- Chrome or colored edge around badge
-- Stick as close to the reference template layout as possible
+**WHAT THE PFP IS NOT:**
+- NOT a large illustration
+- NOT a full-body character
+- NOT a scene with background
+- NOT a trading card image
+- It's a TINY circular headshot, like a profile picture or passport photo
 
-=== WHAT VARIES PER USER ===
-- Donut style, glaze, toppings (match to vibe)
-- Badge material (wood, metal, enamel, paper, leather, etc.) - MUST look photorealistic
-- Badge base color
-- Edge style (chrome, gold, bronze, etc.)
-- Nameplate colors and font
-- Lanyard color and material - MUST look photorealistic
-- Background color (solid only, no gradients)
-- PFP character description in Peeples cartoon style
-- PFP art style variation
-- Overall color palette from user's PFP
+=== MATERIALS (PHOTOREALISTIC) ===
+Badge and lanyard must look like REAL physical objects with proper lighting/shadows.
 
-=== VIBE DETECTION FROM PROFILE ===
-Determine user's vibe from bio, fid, followers, and PFP description:
-- **Builders/engineers** → technical, maker energy, tool-related props
-- **Degens/traders** → high energy, risk-taking, chart/rocket props
-- **OGs** (fid < 5000) → veteran status, vintage aesthetic, premium materials
-- **Artists/creatives** → creative energy, artistic props and colors
-- **Finance** → professional, premium materials, gold accents
-- **Pixel art PFP** → retro gaming aesthetic, pixel-bits toppings, pixel style
-- **Nouns/CC0** → bold primary colors, Nouns glasses, collectible feel
-- **Donut ecosystem** → on-brand pink/brown, classic donut imagery
-- **Chill/casual** → relaxed aesthetic, soft colors, friendly energy
-- **Martial arts/sports** → athletic, disciplined, sporty elements
+Badge materials (match to vibe):
+- **brushed-metal**: industrial, builders
+- **glossy-enamel**: fun, playful
+- **matte-enamel**: modern, chill
+- **gold-chrome**: premium, OGs
+- **wood-grain**: earthy, organic
+- **leather**: vintage, premium
+- **holographic**: degens, flashy
 
-=== MATERIAL MATCHING (PHOTOREALISTIC) ===
-Badge materials - choose based on vibe, MUST render photorealistically:
-- **glossy-enamel**: shiny hard enamel, vibrant colors, reflective - good for fun/playful
-- **matte-enamel**: soft non-reflective, modern, understated - good for chill vibes
-- **holographic**: iridescent rainbow shimmer - good for degens/flashy
-- **brushed-metal**: textured metal grain, industrial - good for builders
-- **gold-chrome**: brilliant gold metallic, premium - good for OGs/finance
-- **wood-grain**: natural wood texture with grain - good for earthy/organic vibes
-- **recycled-paper**: matte paper texture, eco-friendly - rare, interesting choice
-- **leather**: rich leather texture - good for premium/vintage
-- **frosted-glass**: translucent, soft glow - good for artists/modern
-- **carbon-fiber**: woven carbon pattern, high-tech - good for tech/builders
+Lanyard materials (VARY these - don't always use chain):
+- **fabric**: casual, friendly (40% of badges)
+- **satin**: elegant, artists (25%)
+- **chain**: bold, OGs/builders (25%)
+- **leather**: vintage, premium (10%)
 
-=== LANYARD MATCHING (PHOTOREALISTIC) ===
-Lanyard materials - choose based on vibe, MUST render photorealistically. VARY THE MATERIALS - don't overuse chain:
-- **fabric**: woven cloth, casual - good for friendly/casual vibes, newcomers
-- **satin**: smooth shiny ribbon, elegant - good for artists/premium vibes
-- **chain**: metal chain links, bold - good for OGs/builders/finance, use ~30% of the time
-- **pixel-ribbon**: pixelated pattern - ONLY for pixel art PFPs
-- **leather**: classic leather strap, premium - good for OGs/vintage vibes
-
-Match to vibe (ACTIVELY VARY):
-- OGs/vintage → leather (50%) or chain (50%)
-- Builders/tech → fabric (40%), chain (30%), leather (30%)
-- Degens/chaotic → chain (40%), satin (30%), fabric (30%)
-- Artists/creative → satin (60%) or fabric (40%)
-- Pixel PFP users → pixel-ribbon (70%) or fabric (30%)
-- Donut ecosystem → fabric (50%) or satin (50%)
-- Chill vibes → fabric (60%) or satin (40%)
-- Finance/suits → chain (40%), leather (40%), fabric (20%)
-- Nouns/CC0 → fabric (50%), chain (30%), pixel-ribbon (20%)
-- Martial arts/athletic → fabric (80%), leather (20%)
-- Cyberpunk/neon → chain (60%), satin (40%)
-- Growth/culture → fabric (50%), satin (30%), chain (20%)
-
-Overall target distribution: fabric 40%, satin 25%, chain 25%, leather 10%, pixel-ribbon rare
-
-=== COLOR PALETTE GUIDANCE ===
-Extract colors from PFP description and user vibe:
-
-**AVOID AI SLOP**:
-- NO bright cyan + hot pink combinations
-- NO blue-purple gradients
-- NO excessive neon unless explicitly degen/cyberpunk vibe
-- NO purple backgrounds
-
-**PREFER WARM FRIENDLY COLORS**:
+=== COLOR GUIDANCE ===
+**USE warm, friendly colors:**
 - Cream, peach, coral, caramel, warm brown
 - Soft pink, mint, butter yellow
-- Navy, tan, olive, rust for builders
-- Gold, burgundy, forest green for OGs
+- Navy, tan, olive for builders
+- Gold, burgundy for OGs
 
-**Vibe-Based Palettes**:
-- Builder/tech: charcoal, cream, caramel, slate
-- OG/vintage: navy, gold, cream, saddle brown
-- Donut ecosystem: soft pink, brown, warm cream, rose
-- Chill: sky blue, butter, mint, blush
-- Artist: lavender, teal, lemon, pink
-- Degen (sparingly): cyan, hot pink - ONLY if vibe matches
-- Nouns/CC0: red, yellow, green, blue - bold primaries
+**AVOID AI slop colors:**
+- NO bright cyan + hot pink combos
+- NO purple backgrounds
+- NO excessive neon (unless degen vibe)
 
-=== BACKGROUND RULES ===
-- ALWAYS solid color, NEVER gradients
-- NEVER purple or blue-purple
-- Good choices: black, white, cream, soft pink, mint, charcoal, warm cream, navy
+=== RARITY CALCULATION ===
+Calculate based on:
+- Base: random 0-100
+- fid < 1000: +40
+- fid < 10000: +20  
+- fid < 100000: +10
+- followers > 50000: +30
+- followers > 10000: +20
+- followers > 1000: +10
 
-=== FONT EFFECT MATCHING ===
-header.fontEffect options (DO NOT overuse chrome-shine):
-- **none**: clean, modern - good default
-- **embossed**: raised texture - good for premium/classic
-- **shadow-drop**: drop shadow - good for builders/readable
-- **chrome-shine**: reflective chrome - good for OGs/flashy (use sparingly)
-- **vintage-worn**: aged/distressed - good for vintage vibes
+Result: 100+ = legendary, 70-99 = rare, 40-69 = uncommon, 0-39 = common
 
-Match to vibe:
-- OGs → chrome-shine or embossed
-- Builders → shadow-drop or embossed
-- Artists → vintage-worn or none
-- Casual → none or shadow-drop
+=== NANO BANANA PROMPT TEMPLATE ===
+Use this EXACT structure, filling in the bracketed values:
 
-=== NAMEPLATE FONT MATCHING ===
-DO NOT default to clean-sans! Actively vary based on vibe:
-- OG → western-slab, art-deco-display
-- Builder/tech → bold-condensed, pixel-mono
-- Degen → neon-tubes, arcade-pixel
-- Artist → handwritten, groovy-70s
-- Donut → retro-script, bold-condensed
-- Pixel PFP → arcade-pixel, pixel-mono
-- Finance → art-deco-display
-- Nouns → bold-condensed, arcade-pixel
-- Use clean-sans ONLY as last resort
+"Product photography of a photorealistic employee ID badge. CRITICAL: This is an ID BADGE, not a trading card.
 
-=== PFP ART STYLE MATCHING ===
-The character description is provided from Step 1. Choose an artStyle that matches the vibe:
-- **pixel-art**: for pixel art PFPs, retro gaming aesthetic
-- **soft-cartoon**: warm friendly default, approachable
-- **clean-vector**: modern, builder/tech vibes
-- **nouns-chunky**: for Nouns holders, bold flat colors
-- **retro-mascot**: vintage vibes, classic cartoon
-- **watercolor**: soft artistic vibes
-- **graffiti-street**: urban, edgy
-- **art-deco**: elegant, finance/premium
-- **cyberpunk-neon**: high-tech, degen energy (use warm colors though)
+EXACT LAYOUT (match reference template):
+- Wide horizontal rounded rectangle badge shape (landscape orientation within 1:1 frame)
+- [LANYARD_MATERIAL] [LANYARD_COLOR] lanyard attached at top center
+- Small notch at top center with [DONUT_STYLE] pixel donut ([GLAZE] glaze, [TOPPINGS], cute kawaii face)
+- 'Peeples Donuts' text in retro script font, [HEADER_COLOR], centered below donut
+- Horizontal nameplate bar in lower portion with [NAMEPLATE_COLOR] background
+- TINY circular PFP on LEFT side of nameplate (PASSPORT PHOTO SIZE - just head/face): [FACE_DESCRIPTION] in friendly Peeples cartoon style
+- Username '[USERNAME]' in [FONT_STYLE] font on RIGHT side of nameplate
+- Three small recessed circular flair holes at bottom edge, evenly spaced horizontally
 
-=== RARITY RULES ===
-Rarity should be determined by a combination of factors with some randomness:
+MATERIALS: Photorealistic [BADGE_MATERIAL] badge with [BASE_COLOR] base, [EDGE_STYLE] metallic edge trim. Real materials with proper shadows, reflections, lighting.
 
-Calculate a rarity score:
-- Base score = random number between 0-100 (use seed % 100)
-- If fid < 1000: +40 points
-- If fid < 10000: +20 points
-- If fid < 100000: +10 points
-- If followers > 50000: +30 points
-- If followers > 10000: +20 points
-- If followers > 1000: +10 points
-- If score > 0.8: +15 points (high quality account)
-- If score > 0.5: +10 points
+CRITICAL CONSTRAINTS:
+- PFP is THUMBNAIL SIZE (like passport photo) - shows ONLY head and face, no body
+- Badge is horizontal/landscape shape, NOT vertical, NOT square
+- This is an employee ID badge, NOT an illustrated trading card
+- NO scene or background inside the badge
+- NO full-body character illustration
+- Solid [BACKGROUND_COLOR] background behind badge
+- Badge photographed flat, straight-on, centered, no angle
 
-Final rarity based on total:
-- 100+: legendary
-- 70-99: rare
-- 40-69: uncommon
-- 0-39: common
+Professional product photography, studio lighting, photorealistic badge materials, cartoon style ONLY for the tiny PFP face."
 
-This creates a mix where OGs have an advantage but aren't guaranteed legendary, and newer accounts with strong engagement can still get rare/uncommon.
-
-=== NANO BANANA PROMPT CONSTRUCTION ===
-Build the nanoBananaPrompt emphasizing:
-1. Match reference template shape and layout
-2. Photorealistic badge and lanyard materials
-3. Peeples cartoon style ONLY for PFP character
-4. 1:1 aspect ratio
-5. Solid background, no gradients
-6. STRAIGHT-ON, CENTERED, NO ANGLE
-7. FIXED FLAIR SLOT POSITIONS (same coordinates for all badges)
-
-Template structure:
-"Photorealistic employee badge matching the reference template EXACTLY. CRITICAL: Badge is photographed straight-on, perfectly centered, directly facing camera with no perspective angle, completely flat and parallel to camera. Wide horizontal rounded rectangle badge (1:1 aspect ratio) with [EDGE_STYLE] edge. [DONUT_STYLE] donut with [GLAZE] glaze and [TOPPINGS], cute cartoon face, sits in top notch. 'Peeples Donuts' in retro script font, [FONT_COLOR], centered below donut. Photorealistic [BADGE_MATERIAL] badge with realistic [BASE_COLOR] base color, proper lighting, shadows and reflections. Cream nameplate rectangle in lower portion. Small circular PFP on LEFT showing [PEEPLES_CHARACTER_DESCRIPTION] in friendly Peeples Donuts cartoon style - soft rounded features, warm colors, expressive face. Username '[USERNAME]' in [NAMEPLATE_FONT] font, [NAMEPLATE_FONT_COLOR], to right of PFP. CRITICAL: Three recessed circular flair slots at bottom edge in FIXED POSITIONS - evenly spaced horizontally at exact same pixel coordinates as reference template, slots must be in identical position for all badges. Photorealistic [LANYARD_COLOR] [LANYARD_MATERIAL] lanyard at top with realistic materials and lighting. Clean solid [BACKGROUND_COLOR] background. IMPORTANT: Badge is centered and flat, shot from directly above with no angle or tilt, perfectly parallel to camera, flair slots at fixed coordinates matching reference. Product photography with professional lighting - badge and lanyard look photorealistic with proper materials, PFP character is friendly Peeples cartoon style."
+=== JSON OUTPUT FORMAT ===
+Return valid JSON with these fields:
+{
+  "rarity": "common|uncommon|rare|legendary",
+  "donut": {
+    "style": "classic-ring|old-fashioned|cruller|filled|twist|maple-bar",
+    "glaze": "chocolate|vanilla|strawberry|maple|honey|rainbow",
+    "toppings": "sprinkles|nuts|coconut|bacon|oreo|none"
+  },
+  "badge": {
+    "material": "brushed-metal|glossy-enamel|matte-enamel|gold-chrome|wood-grain|leather|holographic",
+    "baseColor": "warm color from palette",
+    "edgeStyle": "chrome|gold|bronze|copper|silver"
+  },
+  "lanyard": {
+    "material": "fabric|satin|chain|leather",
+    "color": "color that complements badge"
+  },
+  "header": {
+    "text": "Peeples Donuts",
+    "fontColor": "color for header text",
+    "fontEffect": "none|embossed|shadow-drop|chrome-shine|vintage-worn"
+  },
+  "nameplate": {
+    "backgroundColor": "dark or cream color",
+    "font": "bold-condensed|pixel-mono|retro-script|western-slab|arcade-pixel|art-deco-display|clean-sans",
+    "fontColor": "contrasting color"
+  },
+  "avatar": {
+    "faceDescription": "the FACE description provided - head/face only",
+    "artStyle": "soft-cartoon|pixel-art|clean-vector|retro-mascot"
+  },
+  "background": "solid color - cream, charcoal, warm white, soft pink, mint, navy",
+  "seed": number,
+  "nanoBananaPrompt": "the full prompt built from template above"
+}
 
 === STRICT RULES ===
-- header.text = "Peeples Donuts"
-- Badge shape matches reference template
-- Badge materials look PHOTOREALISTIC
-- Lanyard looks PHOTOREALISTIC  
-- PFP character is Peeples cartoon style
-- Background is ALWAYS solid color
-- NO gradients anywhere
-- seed = (fid * 1000) + random 3-digit number
-- Extract colors from PFP for character outfit
-- Match all choices to user's vibe
-- Nameplate font should rarely be clean-sans
-- Chain lanyard is good default for many vibes`;
+- header.text MUST be "Peeples Donuts"
+- faceDescription should be SHORT - face/head features only
+- nanoBananaPrompt MUST emphasize: thumbnail PFP, horizontal badge, ID badge not trading card
+- Background MUST be solid color, no gradients
+- seed = (fid * 1000) + random 3-digit number`;
 
 function buildPfpAnalyzerPrompt(user: any, fid: string): Messages {
   const location = user.profile?.location?.address
@@ -321,7 +240,7 @@ function buildPfpAnalyzerPrompt(user: any, fid: string): Messages {
       content: [
         {
           type: "text",
-          text: `Here is the Peeples Donuts style reference. This is the aesthetic you should emulate - friendly cartoon characters with warm colors, expressive faces, and community energy:`,
+          text: `Here is the Peeples Donuts style reference. This is the aesthetic you should emulate for the face - friendly cartoon style with warm colors and expressive features:`,
         },
         {
           type: "image_url",
@@ -331,7 +250,7 @@ function buildPfpAnalyzerPrompt(user: any, fid: string): Messages {
         },
         {
           type: "text",
-          text: `Now create a Peeples Donuts style cartoon character description for this user based on their PFP and profile.
+          text: `Now analyze this user's PFP and create a FACE description (for tiny badge thumbnail) and VIBE summary.
 
 **User Profile:**
 - Username: ${user.username}
@@ -341,7 +260,11 @@ function buildPfpAnalyzerPrompt(user: any, fid: string): Messages {
 - Followers: ${user.follower_count}
 - FID: ${fid}
 
-Look at their PFP image below and create a friendly Peeples Donuts cartoon character that captures their essence and vibe, matching the style shown in the reference image above.`,
+Remember: FACE is for a TINY circular thumbnail - only describe head/face features that would be visible in a small profile picture. No body, no pose, no props being held.
+
+Output format:
+FACE: [description]
+VIBE: [summary]`,
         },
         {
           type: "image_url",
@@ -354,7 +277,17 @@ Look at their PFP image below and create a friendly Peeples Donuts cartoon chara
   ];
 }
 
-function buildBadgeGeneratorPrompt(user: any, fid: string, characterDescription: string): Messages {
+function parseFaceAndVibe(response: string): { face: string; vibe: string } {
+  const faceMatch = response.match(/FACE:\s*(.+?)(?=VIBE:|$)/is);
+  const vibeMatch = response.match(/VIBE:\s*(.+?)$/is);
+  
+  return {
+    face: faceMatch ? faceMatch[1].trim() : response.trim(),
+    vibe: vibeMatch ? vibeMatch[1].trim() : "friendly energy"
+  };
+}
+
+function buildBadgeGeneratorPrompt(user: any, fid: string, faceDescription: string, vibe: string): Messages {
   const location = user.profile?.location?.address
     ? {
         city: user.profile.location.address.city || "Unknown",
@@ -374,7 +307,7 @@ function buildBadgeGeneratorPrompt(user: any, fid: string, characterDescription:
       content: [
         {
           type: "text",
-          text: "Here is the reference template that shows the exact badge shape and layout to match:",
+          text: "Here is the reference template showing the EXACT badge layout to match. Notice: horizontal badge shape, small circular PFP on left of nameplate, username on right, three flair holes at bottom:",
         },
         {
           type: "image_url",
@@ -407,23 +340,20 @@ function buildBadgeGeneratorPrompt(user: any, fid: string, characterDescription:
 }
 \`\`\`
 
-**Peeples Character Description (use this for avatar.pfpDescription):**
-${characterDescription}
+**FACE Description (use this for the tiny PFP thumbnail - head/face only):**
+${faceDescription}
 
-**Instructions:**
-1. Use the character description above for the PFP (already in Peeples style)
-2. Determine user's vibe from their bio and profile data
-3. Choose badge properties that match their vibe (donut style, materials, colors, fonts)
-4. Build a nanoBananaPrompt that emphasizes: matching reference template shape, 1:1 aspect ratio, photorealistic materials for badge/lanyard, cartoon style for PFP character
+**VIBE Summary (use this to guide material/color choices):**
+${vibe}
 
-CRITICAL:
-- Badge shape and layout MUST match reference template
-- Badge material MUST be described to render photorealistically
-- Lanyard MUST be described to render photorealistically  
-- Use the provided character description for the PFP
-- Use WARM colors appropriate to their vibe (avoid neon unless degen)
-- Vary nameplate font based on vibe (rarely use clean-sans)
-- Background MUST be solid color (no gradients)`,
+**CRITICAL REMINDERS:**
+1. The PFP is a TINY circular thumbnail showing ONLY the face - like a passport photo
+2. The badge shape is HORIZONTAL (wider than tall) - NOT vertical, NOT square
+3. This is an employee ID badge - NOT an illustrated trading card
+4. The nanoBananaPrompt must emphasize: "thumbnail PFP", "passport photo size", "ID badge not trading card"
+5. Match the reference template layout EXACTLY
+
+Generate the JSON configuration with all fields including the nanoBananaPrompt.`,
         },
       ],
     },
@@ -460,18 +390,21 @@ router.get("/:fid", authenticate, async (req, res) => {
 
     const user = users[0];
 
-    // Step 1: Generate Peeples Donuts character description from PFP and profile
+    // Step 1: Generate FACE description and VIBE from PFP and profile
     const pfpAnalyzerPrompt = buildPfpAnalyzerPrompt(user, fid);
     const characterDescriptionResponse = await veniceClient.makeTextGeneration(
       pfpAnalyzerPrompt,
       0.6
     );
-    const characterDescription = characterDescriptionResponse.result;
+    
+    // Parse the response to extract FACE and VIBE separately
+    const { face, vibe } = parseFaceAndVibe(characterDescriptionResponse.result);
 
-    console.log("Character Description:", characterDescription);
+    console.log("Face Description:", face);
+    console.log("Vibe:", vibe);
 
     // Step 2: Generate badge configuration JSON
-    const badgeGeneratorPrompt = buildBadgeGeneratorPrompt(user, fid, characterDescription);
+    const badgeGeneratorPrompt = buildBadgeGeneratorPrompt(user, fid, face, vibe);
     const badgeConfigResponse = await veniceClient.makeTextGeneration(
       badgeGeneratorPrompt,
       0.7,
@@ -494,7 +427,8 @@ router.get("/:fid", authenticate, async (req, res) => {
 
     res.status(200).json({
       imageUrl: pfpImageUrl,
-      characterDescription: characterDescription,
+      faceDescription: face,
+      vibe: vibe,
       badgeConfig: badgeConfigJson,
       pinataCid: uploadResponse.cid,
     });
