@@ -220,6 +220,23 @@ router.get("/:fid", authenticate, async (req, res) => {
       peeplesBadgeResponseFormat
     );
     const badgeConfigJson = JSON.parse(badgeConfigResponse.result);
+    
+    // Force correct values that the LLM keeps getting wrong
+    badgeConfigJson.header.text = "Peeples Donuts";
+    badgeConfigJson.nameplate.username = user.username;
+    badgeConfigJson.nameplate.displayName = user.display_name || user.username;
+    badgeConfigJson.avatar.artStyle = "pixel-art";
+    
+    // Force nanoBananaPrompt to have correct structure
+    const pfpDesc = badgeConfigJson.avatar.pfpDescription;
+    const badgeMaterial = badgeConfigJson.badge.material;
+    const badgeColor = badgeConfigJson.badge.baseColor;
+    const lanyardColor = badgeConfigJson.lanyard.color;
+    const lanyardMaterial = badgeConfigJson.lanyard.material;
+    const bgColor = badgeConfigJson.background.color;
+    const donutGlaze = badgeConfigJson.donut.glaze;
+    
+    badgeConfigJson.nanoBananaPrompt = `Peeples Donuts employee badge, wide horizontal rectangle shape. ${lanyardMaterial} ${lanyardColor} lanyard at top. ${donutGlaze} pixel art donut with kawaii face sitting in top notch. "Peeples Donuts" retro script text below donut. Nameplate bar: small circular PFP on left containing ${pfpDesc} in pixel art style, dark rectangle with "${user.username}" text on right. Three small circular metal grommet holes evenly spaced at bottom edge. ${badgeMaterial} badge with ${badgeColor} color. Solid ${bgColor} background.`;
 
     console.log("Badge Config:", JSON.stringify(badgeConfigJson, null, 2));
 
