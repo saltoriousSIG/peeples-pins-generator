@@ -115,17 +115,37 @@ The Peeples brand style (for PFP character ONLY):
 - Playful and fun, like a cartoon donut shop
 - Think: friendly neighborhood donut shop mascots
 
-=== FIXED LAYOUT (NEVER CHANGES) ===
-- Wide horizontal rounded rectangle badge
-- Small notch cutout at top center for donut
-- Donut sits in top notch with cute face
-- "Peeples Donuts" text centered below donut in retro script
-- Nameplate rectangle in lower portion
-- Small circular PFP on LEFT side of nameplate (NO BORDER)
-- Username text to RIGHT of PFP
-- EXACTLY 3 recessed circular flair slots at bottom edge
-- Lanyard attached at top
-- Chrome or colored edge around badge
+=== BADGE SHAPE (NEVER CHANGES) ===
+The badge SHAPE and STRUCTURE must match the reference template exactly. Only colors/materials/styling vary.
+
+FIXED STRUCTURE:
+- Badge is a WIDE HORIZONTAL rounded rectangle (landscape, wider than tall, like the reference)
+- Circular notch cutout at TOP CENTER where donut sits
+- Rectangular nameplate area in lower half
+- EXACTLY 3 circular pin holes at bottom edge, evenly spaced horizontally
+- Metal edge border around entire badge
+
+FIXED POSITIONS:
+- Donut: centered in top notch
+- "Peeples Donuts" text: centered below donut
+- Nameplate: lower portion of badge
+- PFP: small circle on LEFT side of nameplate (ALWAYS LEFT)
+- Username: to the RIGHT of PFP (ALWAYS RIGHT OF PFP)
+- Pin holes: 3 circles at bottom, evenly spaced, same position every time
+
+WHAT STAYS THE SAME FOR ALL BADGES:
+- Overall badge silhouette/shape
+- Position of all elements relative to each other
+- 3 pin holes at bottom in fixed positions
+
+WHAT VARIES PER USER:
+- All colors and materials
+- Donut style/glaze/toppings
+- Badge material and color
+- Edge color (chrome, gold, etc.)
+- Nameplate color
+- Lanyard style and color
+- Background color
 
 === WHAT VARIES PER USER ===
 - Donut style, glaze, toppings (match to vibe)
@@ -280,16 +300,16 @@ This creates a mix where OGs have an advantage but aren't guaranteed legendary, 
 
 === NANO BANANA PROMPT CONSTRUCTION ===
 Build the nanoBananaPrompt emphasizing:
-1. Match reference template shape and layout
+1. BADGE SHAPE MUST MATCH REFERENCE - wide horizontal rectangle with notch at top
 2. Photorealistic badge and lanyard materials
 3. Peeples cartoon style ONLY for PFP character
-4. 1:1 aspect ratio
+4. 1:1 aspect ratio canvas
 5. Solid background, no gradients
 6. STRAIGHT-ON, CENTERED, NO ANGLE
-7. FIXED FLAIR SLOT POSITIONS (same coordinates for all badges)
+7. THREE PIN HOLES at bottom edge, evenly spaced
 
 Template structure:
-"Photorealistic employee badge matching the reference template EXACTLY. CRITICAL: Badge is photographed straight-on, perfectly centered, directly facing camera with no perspective angle, completely flat and parallel to camera. Wide horizontal rounded rectangle badge (1:1 aspect ratio) with [EDGE_STYLE] edge. [DONUT_STYLE] donut with [GLAZE] glaze and [TOPPINGS], cute cartoon face, sits in top notch. 'Peeples Donuts' in retro script font, [FONT_COLOR], centered below donut. Photorealistic [BADGE_MATERIAL] badge with realistic [BASE_COLOR] base color, proper lighting, shadows and reflections. Cream nameplate rectangle in lower portion. Small circular PFP on LEFT showing [PEEPLES_CHARACTER_DESCRIPTION] in friendly Peeples Donuts cartoon style - soft rounded features, warm colors, expressive face. Username '[USERNAME]' in [NAMEPLATE_FONT] font, [NAMEPLATE_FONT_COLOR], to right of PFP. CRITICAL: Three recessed circular flair slots at bottom edge in FIXED POSITIONS - evenly spaced horizontally at exact same pixel coordinates as reference template, slots must be in identical position for all badges. Photorealistic [LANYARD_COLOR] [LANYARD_MATERIAL] lanyard at top with realistic materials and lighting. Clean solid [BACKGROUND_COLOR] background. IMPORTANT: Badge is centered and flat, shot from directly above with no angle or tilt, perfectly parallel to camera, flair slots at fixed coordinates matching reference. Product photography with professional lighting - badge and lanyard look photorealistic with proper materials, PFP character is friendly Peeples cartoon style."
+"Photorealistic employee badge with EXACT SAME SHAPE as reference template. Badge shape: wide horizontal rounded rectangle (landscape orientation, much wider than tall) with circular notch cutout at top center. CRITICAL: Badge photographed straight-on, perfectly centered, flat, no angle or tilt. [EDGE_STYLE] metal edge border. [DONUT_STYLE] donut with [GLAZE] glaze and [TOPPINGS] sitting in top notch. 'Peeples Donuts' in retro script, [FONT_COLOR], centered below donut. [BADGE_MATERIAL] badge body in [BASE_COLOR] with photorealistic materials. Rectangular nameplate in lower portion with small circular PFP on LEFT showing [PEEPLES_CHARACTER_DESCRIPTION] in Peeples cartoon style, username '[USERNAME]' in [NAMEPLATE_FONT] to RIGHT of PFP. THREE circular pin holes at bottom edge, evenly spaced horizontally. [LANYARD_COLOR] [LANYARD_MATERIAL] lanyard at top. Solid [BACKGROUND_COLOR] background. Product photography, professional lighting."
 
 === STRICT RULES ===
 - header.text = "Peeples Donuts"
