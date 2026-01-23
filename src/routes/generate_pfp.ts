@@ -25,12 +25,12 @@ Reference the style guide images showing the Peeples universe:
 === YOUR TASK ===
 Look at the user's PFP and bio, then create TWO descriptions:
 
-1. **FACE DESCRIPTION** (for the small badge PFP - MAX 20 words): 
+1. **face** (for the small badge PFP - MAX 20 words): 
    - ONLY head/face features: hair style, hair color, skin tone, facial expression, glasses, hat, facial hair
    - NO body, NO pose, NO props, NO actions, NO full character
    - This will be rendered as a TINY thumbnail, so only visible facial features matter
 
-2. **VIBE SUMMARY** (for badge styling - MAX 10 words):
+2. **vibe** (for badge styling - MAX 10 words):
    - Their energy/personality in a few words for badge material/color choices
 
 === VIBE DETECTION ===
@@ -46,41 +46,40 @@ Read the bio and determine their vibe:
 - **Martial arts/sports** → disciplined, athletic
 
 === OUTPUT FORMAT ===
-You MUST output in this exact format:
+You MUST output valid JSON only, no other text:
 
-FACE: [15-20 word description of face/head ONLY - hair, skin, expression, accessories on head]
-VIBE: [5-10 word energy/personality summary]
+{
+  "face": "15-20 word description of face/head ONLY - hair, skin, expression, accessories on head",
+  "vibe": "5-10 word energy/personality summary"
+}
 
 === EXAMPLES ===
 
 **Input:** Pixel art PFP with white afro, cyan eyes, dark skin + Bio: "builder, ninja, BJJ"
 **Output:**
-FACE: Friendly face with large white curly afro, dark skin, cyan-tinted goggles on forehead, warm determined smile, rosy cheeks
-VIBE: Technical ninja builder, maker energy, disciplined
+{"face": "Friendly face with large white curly afro, dark skin, cyan-tinted goggles on forehead, warm determined smile, rosy cheeks", "vibe": "Technical ninja builder, maker energy, disciplined"}
 
 **Input:** Photo of person in cowboy hat + Bio: "builder, AI researcher, donut dealer"
 **Output:**
-FACE: Cheerful face with tan cowboy hat, short brown beard, friendly eyes, warm genuine smile, light skin
-VIBE: Desert builder, frontier maker, friendly professional
+{"face": "Cheerful face with tan cowboy hat, short brown beard, friendly eyes, warm genuine smile, light skin", "vibe": "Desert builder, frontier maker, friendly professional"}
 
 **Input:** Illustrated woman with glasses + Bio: "artist, creative director"
 **Output:**
-FACE: Creative face with round glasses, wavy auburn hair with tiny donut hair clips, big enthusiastic smile, rosy cheeks
-VIBE: Artistic dreamer, creative energy, warm
+{"face": "Creative face with round glasses, wavy auburn hair with tiny donut hair clips, big enthusiastic smile, rosy cheeks", "vibe": "Artistic dreamer, creative energy, warm"}
 
 **Input:** Robot/pixel character PFP + Bio: "crypto OG, early adopter"
 **Output:**
-FACE: Pixel-style robot face with glowing cyan eyes, metallic gray head, friendly LED smile, antenna on top
-VIBE: Crypto OG, legendary veteran, wise elder
+{"face": "Pixel-style robot face with glowing cyan eyes, metallic gray head, friendly LED smile, antenna on top", "vibe": "Crypto OG, legendary veteran, wise elder"}
 
 === CRITICAL RULES ===
-- FACE description is for a TINY circular thumbnail - only describe what's visible in a small headshot
-- NO full body descriptions in FACE
-- NO poses or actions in FACE
-- NO props being held in FACE (only worn accessories like hats/glasses)
+- Output ONLY valid JSON, no markdown, no explanation
+- face description is for a TINY circular thumbnail - only describe what's visible in a small headshot
+- NO full body descriptions in face
+- NO poses or actions in face
+- NO props being held in face (only worn accessories like hats/glasses)
 - Extract key colors from PFP for the face description
-- Keep FACE under 25 words maximum
-- Keep VIBE under 12 words maximum`;
+- Keep face under 25 words maximum
+- Keep vibe under 12 words maximum`;
 
 const BADGE_GENERATOR_SYSTEM_PROMPT = `You generate JSON configurations for Peeples Donuts NFT badges.
 
@@ -250,7 +249,7 @@ function buildPfpAnalyzerPrompt(user: any, fid: string): Messages {
         },
         {
           type: "text",
-          text: `Now analyze this user's PFP and create a FACE description (for tiny badge thumbnail) and VIBE summary.
+          text: `Now analyze this user's PFP and create a face description (for tiny badge thumbnail) and vibe summary.
 
 **User Profile:**
 - Username: ${user.username}
@@ -260,11 +259,10 @@ function buildPfpAnalyzerPrompt(user: any, fid: string): Messages {
 - Followers: ${user.follower_count}
 - FID: ${fid}
 
-Remember: FACE is for a TINY circular thumbnail - only describe head/face features that would be visible in a small profile picture. No body, no pose, no props being held.
+Remember: face is for a TINY circular thumbnail - only describe head/face features that would be visible in a small profile picture. No body, no pose, no props being held.
 
-Output format:
-FACE: [description]
-VIBE: [summary]`,
+Output valid JSON only:
+{"face": "...", "vibe": "..."}`,
         },
         {
           type: "image_url",
@@ -277,14 +275,20 @@ VIBE: [summary]`,
   ];
 }
 
-function parseFaceAndVibe(response: string): { face: string; vibe: string } {
-  const faceMatch = response.match(/FACE:\s*(.+?)(?=VIBE:|$)/is);
-  const vibeMatch = response.match(/VIBE:\s*(.+?)$/is);
+interface FaceVibeResponse {
+  face: string;
+  vibe: string;
+}
+
+function parseFaceAndVibe(response: string): FaceVibeResponse {
+  const cleaned = response.replace(/```json\n?|```\n?/g, '').trim();
+  const parsed = JSON.parse(cleaned) as FaceVibeResponse;
   
-  return {
-    face: faceMatch ? faceMatch[1].trim() : response.trim(),
-    vibe: vibeMatch ? vibeMatch[1].trim() : "friendly energy"
-  };
+  if (!parsed.face || !parsed.vibe) {
+    throw new Error('Invalid response: missing face or vibe');
+  }
+  
+  return parsed;
 }
 
 function buildBadgeGeneratorPrompt(user: any, fid: string, faceDescription: string, vibe: string): Messages {
