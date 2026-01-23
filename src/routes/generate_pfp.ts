@@ -126,6 +126,7 @@ The Peeples brand style (for PFP character ONLY):
 - EXACTLY 3 recessed circular flair slots at bottom edge
 - Lanyard attached at top
 - Chrome or colored edge around badge
+- Stick as close to the reference template layout as possible
 
 === WHAT VARIES PER USER ===
 - Donut style, glaze, toppings (match to vibe)
@@ -255,6 +256,7 @@ The character description is provided from Step 1. Choose an artStyle that match
 - **graffiti-street**: urban, edgy
 - **art-deco**: elegant, finance/premium
 - **cyberpunk-neon**: high-tech, degen energy (use warm colors though)
+- The pfp generated on the badge must always be to the left of thier username, and must be no larger than 75px by 75px in size.
 
 === RARITY RULES ===
 Rarity should be determined by a combination of factors with some randomness:
