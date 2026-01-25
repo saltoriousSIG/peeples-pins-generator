@@ -13,15 +13,15 @@ type ModifyPfpRequest = {
 };
 
 const BASE_SIZE = 1024;
-const FLAIR_SIZE = 75;
+const FLAIR_SIZE = 100;
 
 // Positions for flair slots (top-left coordinates for 75px flair)
 // Center positions: (291, 830), (482, 830), (662, 830)
 // Top-left = center - (FLAIR_SIZE / 2)
 const FLAIR_POSITIONS: Array<{ top: number; left: number }> = [
-  { top: 793, left: 254 },   // slot 0 - left pinhole (center: 291, 830)
-  { top: 793, left: 445 },   // slot 1 - center pinhole (center: 482, 830)
-  { top: 793, left: 625 },   // slot 2 - right pinhole (center: 662, 830)
+  { top: 10, left: 20 },   // slot 0 - left pinhole (center: 291, 830)
+  { top: 10, left: 80  },   // slot 1 - center pinhole (center: 482, 830)
+  { top: 10, left: 140 },   // slot 2 - right pinhole (center: 662, 830)
 ];
 
 const modifyImage = async (
