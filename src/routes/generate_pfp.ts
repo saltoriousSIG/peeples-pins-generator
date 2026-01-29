@@ -10,7 +10,7 @@ import authenticate from "../middleware/middleware.js";
 const router = Router();
 
 const BASE_TEMPLATE_URL = "https://replicate.delivery/pbxt/OObEh99quqdbeVpamO3N5pLGA4MG0vQba3KdEGF6jl3GLGWq/8e1bgm0fn5rmw0cvcr7aqkf304.jpg";
-
+const PINATA_GATEWAY = process.env.PINATA_GATEWAY || "https://gateway.pinata.cloud/ipfs/";
 const PFP_ANALYZER_SYSTEM_PROMPT = `You create Peeples Donuts style cartoon character descriptions based on users' profile pictures and bios.
 
 === PEEPLES DONUTS CHARACTER STYLE ===
@@ -501,6 +501,7 @@ router.get("/:fid", authenticate, async (req, res) => {
       characterDescription: characterDescription,
       badgeConfig: badgeConfigJson,
       cid: uploadResponse.cid,
+      pinataUrl: `${PINATA_GATEWAY}/ipfs/${uploadResponse.cid}`,
     });
   } catch (error) {
     console.error("Error generating PFP:", error);
